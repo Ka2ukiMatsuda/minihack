@@ -2,14 +2,19 @@
 
 ## Setup
 
+### create virtual environment
+
+```bash
+pyenv install 3.11.11
+pyenv virtualenv 3.11.11 minihack
+pyenv local minihack
+```
+
 ### install dependencies
 
 ```bash
 pip install fastapi[standard]
-pip install sentence-transformers
 ```
-
-or
 
 ```bash
 pip install -r requirements.txt
