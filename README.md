@@ -29,3 +29,20 @@ fastapi dev main.py
 
 - sentence-transformers
     - [models](https://www.sbert.net/docs/sentence_transformer/pretrained_models.html)
+
+## AWS
+
+```bash
+export AWS_PROFILE=<profile>
+```
+
+```bash
+aws sso login --sso-session <session>
+```
+
+```bash
+aws configure list
+```
+
+
+
