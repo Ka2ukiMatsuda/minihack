@@ -2,6 +2,7 @@ from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 import os
 
+
 app = App(
     token=os.getenv("SLACK_BOT_TOKEN"),
     signing_secret=os.getenv("SLACK_SIGNING_SECRET"),
@@ -18,10 +19,7 @@ def handle_mention(event, say):
 def main():
     handler = SocketModeHandler(app, os.getenv("SLACK_APP_TOKEN"))
     handler.start()
-    
-
 
 if __name__ == "__main__":    
     # app.start(port=int(os.getenv("PORT", 3000)))
-    # slack_
     main()
