@@ -35,7 +35,7 @@ query_embedding = model.encode(
     query, convert_to_numpy=True, normalize_embeddings=True
 ).reshape(1, -1)
 
-k = 3
+k = 10
 
 D, I = index.search(query_embedding, k)
 
