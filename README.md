@@ -46,3 +46,8 @@ aws configure list
 
 
 
+```
+pip install slack_bolt
+
+python beepboop.py
+```
