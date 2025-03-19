@@ -4,3 +4,4 @@ slack_bolt==1.22.0
 slack_sdk==3.35.0
 torch==2.6.0
 transformers==4.49.0
+boto3==1.37.15

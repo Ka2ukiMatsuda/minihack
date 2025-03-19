@@ -1,0 +1,28 @@
+{
+  "pages": [
+    {
+      "index": 0,
+      "markdown": "![img-0.jpeg](img-0.jpeg)",
+      "images": [
+        {
+          "id": "img-0.jpeg",
+          "top_left_x": 0,
+          "top_left_y": 0,
+          "bottom_right_x": 5706,
+          "bottom_right_y": 4279,
+          "image_base64": null
+        }
+      ],
+      "dimensions": {
+        "dpi": 200,
+        "height": 4284,
+        "width": 5712
+      }
+    }
+  ],
+  "model": "mistral-ocr-2503-completion",
+  "usage_info": {
+    "pages_processed": 1,
+    "doc_size_bytes": 1023785
+  }
+}
