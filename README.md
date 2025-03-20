@@ -13,17 +13,25 @@ pyenv local minihack
 ### install dependencies
 
 ```bash
-pip install fastapi[standard]
-```
-
-```bash
 pip install -r requirements.txt
 ```
 
-## Run development server
+## Run Bot Locally
+
 ```bash
-fastapi dev main.py
+VISION_ENDPOINT=<azure-computor-vision-endpoint>
+VISION_KEY=<azure-computor-vision-key>
+SLACK_BOT_TOKEN=<slack-bot-token>
+SLACK_SIGNING_SECRET=<slack-signing-secret>
+SLACK_APP_TOKEN=<slack-app-token>
 ```
+
+```bash
+# you should authenticate with aws sso before running the bot
+python bot.py
+```
+
+
 
 ## Info
 
@@ -46,8 +54,3 @@ aws configure list
 
 
 
-```
-pip install slack_bolt
-
-python beepboop.py
-```
