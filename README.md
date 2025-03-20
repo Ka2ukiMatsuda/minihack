@@ -1,5 +1,7 @@
 # minihack
 
+![icon](./icon.png)
+
 ## Setup
 
 ### create virtual environment
