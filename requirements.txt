@@ -4,3 +4,6 @@ slack_sdk==3.35.0
 torch==2.6.0
 transformers==4.49.0
 boto3==1.37.15
+openai==1.67.0
+azure-ai-vision-imageanalysis==1.0.0
+azure-core==1.32.0
