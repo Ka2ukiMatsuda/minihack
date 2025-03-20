@@ -3,29 +3,96 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   minihack
 
-  Sample SAM Template for minihack
+Parameters:
+  OcrTableName:
+    Type: String
+    Default: OcrTable
+  SummaryTableName:
+    Type: String
+    Default: SummaryTable
+  S3Bucket:
+    Type: String
+    Default: minihack-whiteboard-images
+  SlackBotToken:
+    Type: String
+  SlackSigningSecret:
+    Type: String
+
+
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
     Timeout: 3
     MemorySize: 128
+    Environment:
+      Variables:
+        LINE_MESSAGING_ENDPOINT: https://api.line.me/v2/bot/message
+        SLACK_BOT_TOKEN: !Ref SlackBotToken
+        SLACK_SIGNING_SECRET: !Ref SlackSigningSecret
+
+    LoggingConfig:
+      LogFormat: JSON
 
 Resources:
   HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
-      CodeUri: hello_world/
+      CodeUri: retrieve/
       Handler: app.lambda_handler
       Runtime: python3.11
       Architectures:
         - x86_64
+      Policies:
+        - AmazonDynamoDBFullAccess
+        - S3ReadPolicy:
+            BucketName: !Ref S3Bucket
+        - S3WritePolicy:
+            BucketName: !Ref S3Bucket
+      Layers:
+        - !Ref PythonCommonLayer
       Events:
         HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+          Type: Api
           Properties:
-            Path: /hello
-            Method: get
+            Path: /retrieve
+            Method: post
+
+  PythonCommonLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      Description: Layer description
+      ContentUri: dependencies.zip
+      CompatibleRuntimes:
+        - python3.11
+    Metadata:
+      BuildMethod: python3.11
+
+
+  OcrTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref OcrTableName
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
+  SummaryTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref SummaryTableName
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
@@ -40,3 +107,9 @@ Outputs:
   HelloWorldFunctionIamRole:
     Description: "Implicit IAM Role created for Hello World function"
     Value: !GetAtt HelloWorldFunctionRole.Arn
+  ApiURL:
+    Description: API Gateway endpoint URL for Prod stage
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
+
+
+

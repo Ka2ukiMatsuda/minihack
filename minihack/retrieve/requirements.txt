@@ -1,0 +1,5 @@
+slack_bolt==1.22.0
+slack_sdk==3.35.0
+boto3==1.37.15
+# torch==2.6.0
+numpy
